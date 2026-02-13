@@ -167,7 +167,7 @@ INSERT INTO order_items (order_item_id, order_id, product_id, quantity, price) V
 
 
 --------------
--- Analysis --
+-- ANALYSIS --
 --------------
 
 -- Total Revenue
@@ -204,4 +204,27 @@ FROM order_items
 JOIN products ON order_items.product_id = products.product_id
 GROUP BY products.product_name
 ORDER BY revenue DESC;
+
+------------------------------
+-- JOIN TYPES DEMONSTRATION --
+------------------------------
+
+-- Customers who didn’t buy
+
+SELECT customers.customer_id, customers.email, orders.order_id
+FROM customers
+LEFT JOIN orders
+    ON customers.customer_id = orders.customer_id
+WHERE orders.order_id IS NULL;
+
+-- All orders + customer info
+
+SELECT customers.customer_id, customers.email, orders.order_id, orders.order_date
+FROM customers
+RIGHT JOIN orders ON customers.customer_id = orders.customer_id;
+
+-- Full JOIN példa
+
+SELECT COUNT(*) FROM customers
+FULL JOIN orders ON customers.customer_id = orders.customer_id;
 
